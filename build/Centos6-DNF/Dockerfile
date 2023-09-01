@@ -13,6 +13,9 @@ ENV GM_CONNECT_KEY=763WXRBW3PFTC3IXPFWH
 ENV GM_LANDER_VERSION=20180307
 ENV DNF_DB_ROOT_PASSWORD=88888888
 ENV DNF_DB_GAME_PASSWORD=uu5!^%jg
+ENV DP2=false
+
+# RUN yum update -y && yum install -y p7zip && yum clean all
 
 # 将模板添加到模版目录下[后续容器启动需要先将环境变量替换,再将文件移动到正确位置]
 ADD build/Centos6-DNF/neople /home/template/neople
@@ -33,8 +36,11 @@ ADD build/Centos6-DNF/Config.ini /home/template/init/
 ADD build/Centos6-DNF/docker-entrypoint.sh /
 # TEA算法
 ADD build/Centos6-DNF/TeaEncrypt /
+# DP插件
+ADD build/Centos6-DNF/df_game_r.lua /home/template/init/
+ADD build/Centos6-DNF/dp2.tar.gz /home/template/init/
 # 优化CPU
-ADD build/Centos7-DNF/libhook.so /lib/
+ADD build/Centos6-DNF/libhook.so /lib/
 # 放开tmp目录权限
 WORKDIR /tmp
 RUN chmod -R 777 /tmp

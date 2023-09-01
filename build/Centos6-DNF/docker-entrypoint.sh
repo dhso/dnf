@@ -10,6 +10,7 @@ rm -rf /root/run
 rm -rf /root/stop
 rm -rf /root/Config.ini
 rm -rf /root/privatekey.pem
+rm -rf /dp2/df_game_r.lua
 
 # 复制待使用文件
 cp -r /home/template/neople /home/template/neople-tmp
@@ -21,7 +22,22 @@ then
   PUBLIC_IP=`curl -s http://pv.sohu.com/cityjson?ie=utf-8|awk -F\" '{print $4}'`
   echo "public ip: $PUBLIC_IP"
   sleep 5
+  echo
 fi
+
+# dp插件
+if $DP2;
+then
+  # dp2脚本
+  mkdir -pv /dp2
+  cp -rf /data/dp2/* /dp2/
+  # 替换dp2 lib
+  cp /dp2/libGeoIP.so.1 /lib/libGeoIP.so.1
+  echo "enable dp2"
+else
+  echo "disable dp2"
+fi
+echo
 
 chmod +x /TeaEncrypt
 DNF_DB_GAME_PASSWORD=${DNF_DB_GAME_PASSWORD:0:8}

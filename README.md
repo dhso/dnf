@@ -16,6 +16,9 @@ For cooperation and suggestions please contact chenl2448365088@gmail.com or yzd3
 
 站库分离详见 [XanderYe/dnf](https://github.com/XanderYe/dnf)
 
+1. 使用`libhook.so`优化了CPU占用,1-2分钟出五国，占用10%以内
+2. 集成了DP2插件，默认不开启，使用环境变量DP2开启。采用了加载器2方式(替换libGeoIP.so.1)
+
 ## 自动化构建
 
 该项目已经接入CircleCI,会自动化构建每一个版本
@@ -196,6 +199,8 @@ DNF_DB_ROOT_PASSWORD
 DNF_DB_GAME_PASSWORD
 # 采用LD_PRELOAD优化CPU使用[默认为true]
 PRELOAD_LD
+# dp2插件
+DP2
 ```
 Windows高版本用户无法进入频道，需要添加hosts  
 PUBLIC_IP(你的服务器IP)  start.dnf.tw
