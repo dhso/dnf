@@ -1,7 +1,7 @@
 # Base Image
-FROM 1995chen/centos:6.9-DNF-Base
+FROM dhso/centos:6.9-DNF-Base
 
-MAINTAINER 1995chen
+MAINTAINER dhso
 
 # 定义默认环境变量
 ENV AUTO_PUBLIC_IP=false

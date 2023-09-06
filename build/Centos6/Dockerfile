@@ -1,7 +1,7 @@
 # Base Image
 FROM centos:6.9
 
-MAINTAINER 1995chen
+MAINTAINER dhso
 
 # 删除旧源
 RUN cd /etc/yum.repos.d/ && \

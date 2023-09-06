@@ -1,7 +1,7 @@
 # Base Image
-FROM 1995chen/centos:6.9
+FROM dhso/centos:6.9
 
-MAINTAINER 1995chen
+MAINTAINER dhso
 
 # 安装mysql依赖
 ADD build/Centos6-DNF-Base/MySQL-shared-compat-5.0.95-1.rhel5.x86_64.rpm /tmp
