@@ -139,7 +139,7 @@ fi
 
 # 判断DP2文件是否初始化过
 if [ ! -f "/data/dp2/df_game_r.lua" ];then
-  tar -xzf /home/template/init/dp2.tar.gz
+  tar -xzf /home/template/init/dp2.8r2.tgz
   mkdir -pv /data/dp2/
   # 拷贝版本文件到持久化目录
   cp -rf /home/template/init/dp2/* /data/dp2/

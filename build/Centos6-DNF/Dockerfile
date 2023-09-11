@@ -38,7 +38,7 @@ ADD build/Centos6-DNF/docker-entrypoint.sh /
 ADD build/Centos6-DNF/TeaEncrypt /
 # DP插件
 ADD build/Centos6-DNF/df_game_r.lua /home/template/init/
-ADD build/Centos6-DNF/dp2.tar.gz /home/template/init/
+ADD build/Centos6-DNF/dp2.8r2.tgz /home/template/init/
 # 优化CPU
 ADD build/Centos6-DNF/libhook.so /lib/
 # 放开tmp目录权限
