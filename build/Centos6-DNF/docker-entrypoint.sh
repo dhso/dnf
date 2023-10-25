@@ -6,6 +6,8 @@ mkdir -p /home/neople
 rm -rf /root/DnfGateServer
 rm -rf /root/GateRestart
 rm -rf /root/GateStop
+rm -rf /root/WebRestart
+rm -rf /root/WebStop
 rm -rf /root/run
 rm -rf /root/stop
 rm -rf /root/Config.ini
@@ -36,6 +38,17 @@ then
   echo "enable dp2"
 else
   echo "disable dp2"
+fi
+echo
+
+# web插件
+if $WEB_APP;
+then
+  mkdir -pv /web
+  cp -rf /data/web/* /web/
+  echo "enable web app"
+else
+  echo "disable web app"
 fi
 echo
 

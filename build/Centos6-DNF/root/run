@@ -11,6 +11,10 @@ fi
 cd /root
 ./GateRestart
 
+if $WEB_APP;then
+./WebRestart
+fi
+
 cd /home/neople/stun
 chmod 777 *
 rm -f  /home/neople/stun/pid/*.pid

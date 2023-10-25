@@ -1,0 +1,4 @@
+#! /bin/bash
+pid=$(pgrep -f DnfWebApp)
+echo $pid
+kill 2 $pid

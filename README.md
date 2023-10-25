@@ -102,14 +102,73 @@ mkdir -p /data
 # 初始化数据库以及基础数据文件(该过程耗时较长,可能会超过10分钟请耐心等待)
 # 该初始化容器是个一次性任务,跑完会在data, mysql目录下创建初始化文件，程序运行完成后自动退出,不会留下任务容器残留
 # 如果要重新初始化数据,则需要删除mysql, log, data目录重新运行该初始化命令，注意:如果目录没有清空是不会执行任何操作的
-docker run --rm -v /data/log:/home/neople/game/log -v /data/mysql:/var/lib/mysql -v /data/data:/data 1995chen/dnf:centos6-2.0.2 /bin/bash /home/template/init/init.sh
+
+docker run --rm \
+-e DNF_DB_ROOT_PASSWORD=gm_pass \
+-v dnf_mysql_data:/var/lib/mysql \
+-v dnf_server_log:/home/neople/game/log \
+-v dnf_server_data:/data \
+dhso/dnf:centos6.9 \
+/bin/bash /home/template/init/init.sh
 
 # 启动服务
 # PUBLIC_IP为公网IP地址，如果在局域网部署则用局域网IP地址，按实际需要替换
 # GM_ACCOUNT为登录器用户名，建议替换
 # GM_PASSWORD为登录器密码，建议替换
 # DNF_DB_ROOT_PASSWORD为mysql root密码,容器启动是root密码会跟随该环境变量的变化自动更新
-docker run -d -e PUBLIC_IP=x.x.x.x -e DNF_DB_ROOT_PASSWORD=88888888 -e GM_ACCOUNT=gm_user -e GM_PASSWORD=gm_pass -v /data/log:/home/neople/game/log -v /data/mysql:/var/lib/mysql -v /data/data:/data -p 3000:3306/tcp -p 7600:7600/tcp -p 881:881/tcp -p 20303:20303/tcp -p 20303:20303/udp -p 20403:20403/tcp -p 20403:20403/udp -p 40403:40403/tcp -p 40403:40403/udp -p 7000:7000/tcp -p 7000:7000/udp -p 7001:7001/tcp -p 7001:7001/udp -p 7200:7200/tcp -p 7200:7200/udp -p 10011:10011/tcp -p 31100:31100/tcp -p 30303:30303/tcp -p 30303:30303/udp -p 30403:30403/tcp -p 30403:30403/udp -p 10052:10052/tcp -p 20011:20011/tcp -p 20203:20203/tcp -p 20203:20203/udp -p 30703:30703/udp -p 11011:11011/udp -p 2311-2313:2311-2313/udp -p 30503:30503/udp -p 11052:11052/udp --cpus=1 --memory=1g --memory-swap=-1 --shm-size=8g --name=dnf 1995chen/dnf:centos6-2.0.2
+
+docker run -d \
+--name dnf-server \
+-e TZ=Asia/Shanghai \
+-e PUBLIC_IP=x.x.x.x \
+-e DNF_DB_ROOT_PASSWORD=root_pass \
+-e DNF_DB_GAME_PASSWORD=gm_pass \
+-e GM_ACCOUNT=gm_user \
+-e GM_PASSWORD=gm_pass \
+-e GM_CONNECT_KEY=xxxxxxxxxxxxxx \
+-e GM_LANDER_VERSION=20180307 \
+-e DP2=true \
+-e WEB_APP=true \
+-v dnf_mysql_data:/var/lib/mysql \
+-v dnf_server_log:/home/neople/game/log \
+-v dnf_server_data:/data \
+-p 6633:3306/tcp \
+-p 7600:7600/tcp \
+-p 881:881/tcp \
+-p 8888:8888/tcp \
+-p 20303:20303/tcp \
+-p 20303:20303/udp \
+-p 20403:20403/tcp \
+-p 20403:20403/udp \
+-p 40403:40403/tcp \
+-p 40403:40403/udp \
+-p 7000:7000/tcp \
+-p 7000:7000/udp \
+-p 7001:7001/tcp \
+-p 7001:7001/udp \
+-p 7200:7200/tcp \
+-p 7200:7200/udp \
+-p 10011:10011/tcp \
+-p 31100:31100/tcp \
+-p 30303:30303/tcp \
+-p 30303:30303/udp \
+-p 30403:30403/tcp \
+-p 30403:30403/udp \
+-p 10052:10052/tcp \
+-p 20011:20011/tcp \
+-p 20203:20203/tcp \
+-p 20203:20203/udp \
+-p 30703:30703/udp \
+-p 11011:11011/udp \
+-p 2311-2313:2311-2313/udp \
+-p 30503:30503/udp \
+-p 11052:11052/udp \
+--cpus=1 \
+--memory=2g \
+--memory-swap=-1 \
+--shm-size=8g \
+--restart=unless-stopped \
+dhso/dnf:centos6.9
 ```
 
 ## 如何确认已经成功启动
@@ -201,6 +260,8 @@ DNF_DB_GAME_PASSWORD
 PRELOAD_LD
 # dp2插件
 DP2
+# web插件(将启动 web/DnfWebApp)
+WEB_APP
 ```
 Windows高版本用户无法进入频道，需要添加hosts  
 PUBLIC_IP(你的服务器IP)  start.dnf.tw

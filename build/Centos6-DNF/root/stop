@@ -21,3 +21,4 @@ killall -9 secagent
 
 cd
 ./GateStop
+./WebStop

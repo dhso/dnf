@@ -1,7 +1,7 @@
 # Base Image
-FROM 1995chen/centos:6.9
+FROM dhso/centos:6.9
 
-MAINTAINER 1995chen
+MAINTAINER dhso
 
 # 编译Python2.7[安装supervisor]
 ADD build/Centos6-with-py2.7/Python-2.7.13.tgz /tmp/

@@ -1,0 +1,11 @@
+#! /bin/bash
+pid=$(pgrep -f DnfWebApp)
+echo $pid
+kill 2 $pid
+ulimit -n 100000
+echo “正在重新启动网站，请稍候…………”
+sleep 5
+cd /web
+chmod 777 DnfWebApp
+./DnfWebApp > web.log &
+echo “网站启动完毕，请查看服务器root下面web.log，确认是否正常运行。”
