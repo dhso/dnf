@@ -1,0 +1,4 @@
+#! /bin/bash
+pid=$(pgrep -f DnfZLServer)
+echo $pid
+kill 2 $pid

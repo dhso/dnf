@@ -11,8 +11,8 @@ fi
 cd /root
 ./GateRestart
 
-if $WEB_APP;then
-./WebRestart
+if $ZL;then
+./ZLRestart
 fi
 
 cd /home/neople/stun

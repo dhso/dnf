@@ -128,7 +128,7 @@ docker run -d \
 -e GM_CONNECT_KEY=xxxxxxxxxxxxxx \
 -e GM_LANDER_VERSION=20180307 \
 -e DP2=true \
--e WEB_APP=true \
+-e ZL=true \
 -v dnf_mysql_data:/var/lib/mysql \
 -v dnf_server_log:/home/neople/game/log \
 -v dnf_server_data:/data \
@@ -260,8 +260,8 @@ DNF_DB_GAME_PASSWORD
 PRELOAD_LD
 # dp2插件
 DP2
-# web插件(将启动 web/DnfWebApp)
-WEB_APP
+# 统一战力统计插件接口
+ZL
 ```
 Windows高版本用户无法进入频道，需要添加hosts  
 PUBLIC_IP(你的服务器IP)  start.dnf.tw
