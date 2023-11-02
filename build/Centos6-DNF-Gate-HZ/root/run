@@ -1,0 +1,4 @@
+cd /root
+./Restart
+
+tail -f /dev/null

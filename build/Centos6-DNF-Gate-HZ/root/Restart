@@ -1,0 +1,9 @@
+pid=$(pgrep -f HuaZhi)
+kill 2 $pid
+ulimit -n 65535
+sleep 5
+./HuaZhi start &
+sleep 5
+pkill -9 DGPServer
+sleep 1s
+./DGPServer 1 &

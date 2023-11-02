@@ -169,6 +169,19 @@ docker run -d \
 --shm-size=8g \
 --restart=unless-stopped \
 dhso/dnf:centos6.9
+
+# 8188 网关
+# 8991,8992
+docker run -d \
+--name dnf-gate-hz \
+-e TZ=Asia/Shanghai \
+-e DNF_DB_HOST=db_host \
+-e DNF_DB_GAME_PASSWORD=gm_pass \
+-e DNF_DB_PORT=3306 \
+--net=host \
+--privileged=true \
+--restart=unless-stopped \
+dhso/centos:6.9-DNF-Gate-HZ
 ```
 
 ## 如何确认已经成功启动
