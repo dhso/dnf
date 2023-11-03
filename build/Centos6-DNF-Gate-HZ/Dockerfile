@@ -17,6 +17,11 @@ ADD build/Centos6-DNF-Gate-HZ/usr /usr
 ADD build/Centos6-DNF-Gate-HZ/root /root
 ADD build/Centos6-DNF-Gate-HZ/docker-entrypoint.sh /
 
+RUN mkdir -pv /home/neople/game/log/ && \
+    mkdir -pv /root/dnfImg/
+
+VOLUME /home/neople/game/log/
+VOLUME /root/dnfImg/
 
 # 切换工作目录
 WORKDIR /root

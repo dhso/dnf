@@ -14,6 +14,7 @@ ENV GM_LANDER_VERSION=20180307
 ENV DNF_DB_ROOT_PASSWORD=88888888
 ENV DNF_DB_GAME_PASSWORD=uu5!^%jg
 ENV DP2=false
+ENV GATE=true
 ENV ZL=false
 
 # RUN yum update -y && yum install -y p7zip && yum clean all

@@ -108,7 +108,7 @@ docker run --rm \
 -v dnf_mysql_data:/var/lib/mysql \
 -v dnf_server_log:/home/neople/game/log \
 -v dnf_server_data:/data \
-dhso/dnf:centos6.9 \
+dhso/dnf:with-ty-zl \
 /bin/bash /home/template/init/init.sh
 
 # 启动服务
@@ -128,6 +128,7 @@ docker run -d \
 -e GM_CONNECT_KEY=xxxxxxxxxxxxxx \
 -e GM_LANDER_VERSION=20180307 \
 -e DP2=true \
+-e GATE=true \
 -e ZL=true \
 -v dnf_mysql_data:/var/lib/mysql \
 -v dnf_server_log:/home/neople/game/log \
@@ -168,8 +169,9 @@ docker run -d \
 --memory-swap=-1 \
 --shm-size=8g \
 --restart=unless-stopped \
-dhso/dnf:centos6.9
+dhso/dnf:with-ty-zl
 
+# 花枝网关
 # 8188 网关
 # 8991,8992
 docker run -d \
@@ -178,10 +180,12 @@ docker run -d \
 -e DNF_DB_HOST=db_host \
 -e DNF_DB_GAME_PASSWORD=gm_pass \
 -e DNF_DB_PORT=3306 \
+-v dnf_server_log:/home/neople/game/log \
+-v dnf_gate_hz_img:/root/dnfImg \
 --net=host \
 --privileged=true \
 --restart=unless-stopped \
-dhso/centos:6.9-DNF-Gate-HZ
+dhso/dnf-gate:hz
 ```
 
 ## 如何确认已经成功启动
@@ -273,6 +277,8 @@ DNF_DB_GAME_PASSWORD
 PRELOAD_LD
 # dp2插件
 DP2
+# 统一网关
+GATE
 # 统一战力统计插件接口
 ZL
 ```

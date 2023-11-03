@@ -9,7 +9,9 @@ else
 fi
 
 cd /root
+if $GATE;then
 ./GateRestart
+fi
 
 if $ZL;then
 ./ZLRestart
