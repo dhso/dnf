@@ -1,0 +1,11 @@
+#! /bin/bash
+pid=$(pgrep -f DnfZLServer)
+echo $pid
+kill 2 $pid
+ulimit -n 100000
+echo “正在重新启动战力统计，请稍候…………”
+sleep 5
+cd /root
+chmod 777 DnfZLServer
+./DnfZLServer > zl.log &
+echo “战力统计启动完毕，请查看服务器root下面zl.log，确认是否正常运行。”

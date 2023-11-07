@@ -1,0 +1,8 @@
+cd /root
+./GateRestart
+
+if $ZL;then
+./ZLRestart
+fi
+
+tail -f /dev/null
