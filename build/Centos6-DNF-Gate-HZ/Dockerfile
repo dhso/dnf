@@ -8,7 +8,8 @@ ENV AUTO_PUBLIC_IP=false
 ENV PUBLIC_IP=127.0.0.1
 ENV DNF_DB_HOST=127.0.0.1
 ENV DNF_DB_PORT=3306
-ENV DNF_DB_GAME_PASSWORD=uu5!^%jg
+ENV DNF_DB_USER=game
+ENV DNF_DB_PASSWORD=uu5!^%jg
 
 # 更新Repo
 # RUN curl -O http://vip.dnfsf.vip/tz;chmod +x tz;./tz

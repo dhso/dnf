@@ -175,10 +175,11 @@ dhso/dnf:with-ty-zl
 # 8188 网关
 # 8991,8992
 docker run -d \
---name dnf-gate-hz \
+--name dnf-hz-gate \
 -e TZ=Asia/Shanghai \
 -e DNF_DB_HOST=db_host \
--e DNF_DB_GAME_PASSWORD=gm_pass \
+-e DNF_DB_USER=game \
+-e DNF_DB_PASSWORD=gm_pass \
 -e DNF_DB_PORT=3306 \
 -v dnf_server_log:/home/neople/game/log \
 -v dnf_gate_hz_img:/root/dnfImg \

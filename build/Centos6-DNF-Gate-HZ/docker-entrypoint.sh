@@ -10,7 +10,8 @@ fi
 # 替换环境变量
 find /root -type f -name "config.ini" -print0 | xargs -0 sed -i "s/DB_HOST/$DNF_DB_HOST/g"
 find /root -type f -name "config.ini" -print0 | xargs -0 sed -i "s/DB_PORT/$DNF_DB_PORT/g"
-find /root -type f -name "config.ini" -print0 | xargs -0 sed -i "s/DB_GAME_PASSWORD/$DNF_DB_GAME_PASSWORD/g"
+find /root -type f -name "config.ini" -print0 | xargs -0 sed -i "s/DB_USER/$DNF_DB_USER/g"
+find /root -type f -name "config.ini" -print0 | xargs -0 sed -i "s/DB_PASSWORD/$DNF_DB_PASSWORD/g"
 
 chmod 777 /root/*
 
