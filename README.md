@@ -286,6 +286,16 @@ ZL
 Windows高版本用户无法进入频道，需要添加hosts  
 PUBLIC_IP(你的服务器IP)  start.dnf.tw
 
+## 同步拍卖行
+```shell
+将PVF内的 etc/iteminfo.dat文件放入Script.pvf同目录。
++ data
+ + dp2
+ - Script.pvf
+ - iteminfo.dat
+```
+
+
 ## 客户端地址下载
 
 链接: https://pan.baidu.com/s/10RgXFtpEhvRUm-hA98Am4A 提取码: fybn

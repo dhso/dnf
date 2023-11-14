@@ -62,6 +62,12 @@ cp /data/df_game_r /home/neople/game/df_game_r
 chmod 777 /home/neople/game/df_game_r
 cp /data/publickey.pem /home/neople/game/
 
+# 复制拍卖行物品
+if [ -f "/data/iteminfo.dat" ];then
+cp -f /data/iteminfo.dat /home/neople/auction/iteminfo.dat
+cp -f /data/iteminfo.dat /home/neople/point/iteminfo.dat
+fi
+
 mv /home/template/root-tmp/* /root/
 rm -rf /home/template/root-tmp
 chmod 777 /root/*
