@@ -66,6 +66,7 @@ cp /data/publickey.pem /home/neople/game/
 if [ -f "/data/iteminfo.dat" ];then
 cp -f /data/iteminfo.dat /home/neople/auction/iteminfo.dat
 cp -f /data/iteminfo.dat /home/neople/point/iteminfo.dat
+echo "game iteminfo.dat: copyed!"
 fi
 
 mv /home/template/root-tmp/* /root/
