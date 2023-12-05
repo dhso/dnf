@@ -187,6 +187,60 @@ docker run -d \
 --privileged=true \
 --restart=unless-stopped \
 dhso/dnf-gate:hz
+
+# 花枝集成
+docker run -d \
+--name dnf-server \
+-e TZ=Asia/Shanghai \
+-e PUBLIC_IP=xxx.xxx.xxx.xxx \
+-e DNF_DB_PASSWORD=root_pass \
+-e DP2=true \
+-v dnf_mysql_data:/var/lib/mysql \
+-v dnf_server_log:/home/neople/game/log \
+-v dnf_server_data:/data \
+--net=host \
+--privileged=true \
+--cpus=1 \
+--memory=2g \
+--memory-swap=-1 \
+--shm-size=8g \
+--restart=unless-stopped \
+dhso/dnf:hz
+
+# 开放端口如下
+3306:3306/tcp \
+7600:7600/tcp \
+881:881/tcp \
+8188:8188/tcp \
+8888:8888/tcp \
+8991-8992:8991-8992/tcp \
+20303:20303/tcp \
+20303:20303/udp \
+20403:20403/tcp \
+20403:20403/udp \
+40403:40403/tcp \
+40403:40403/udp \
+7000:7000/tcp \
+7000:7000/udp \
+7001:7001/tcp \
+7001:7001/udp \
+7200:7200/tcp \
+7200:7200/udp \
+10011:10011/tcp \
+31100:31100/tcp \
+30303:30303/tcp \
+30303:30303/udp \
+30403:30403/tcp \
+30403:30403/udp \
+10052:10052/tcp \
+20011:20011/tcp \
+20203:20203/tcp \
+20203:20203/udp \
+30703:30703/udp \
+11011:11011/udp \
+2311-2313:2311-2313/udp \
+30503:30503/udp \
+11052:11052/udp \
 ```
 
 ## 如何确认已经成功启动

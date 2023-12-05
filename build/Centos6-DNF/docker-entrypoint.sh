@@ -89,7 +89,7 @@ mysql -u root <<EOF
 delete from mysql.user;
 flush privileges;
 grant all privileges on *.* to 'root'@'%' identified by '$DNF_DB_ROOT_PASSWORD';
-grant all privileges on *.* to 'game'@'127.0.0.1' identified by '$DNF_DB_GAME_PASSWORD';
+grant all privileges on *.* to 'game'@'%' identified by '$DNF_DB_GAME_PASSWORD';
 flush privileges;
 select user,host,password from mysql.user;
 EOF

@@ -1,0 +1,17 @@
+#! /bin/bash
+pid=$(pgrep -f HuaZhi)
+kill 2 $pid
+ulimit -n 65535
+echo “欢迎使用花枝商业登录器”
+echo “正在重新启动网关，请稍候…………”
+
+sleep 5
+./HuaZhi start &
+
+sleep 5
+pid1=$(pgrep -f DGPServer)
+kill 2 $pid1
+
+sleep 1s
+./DGPServer 1 &
+echo “网关启动完毕。”
