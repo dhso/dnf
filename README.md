@@ -108,7 +108,7 @@ docker run --rm \
 -v dnf_mysql_data:/var/lib/mysql \
 -v dnf_server_log:/home/neople/game/log \
 -v dnf_server_data:/data \
-dhso/dnf:with-ty-zl \
+dhso/dnf:hz \
 /bin/bash /home/template/init/init.sh
 
 # 启动服务

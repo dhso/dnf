@@ -2,7 +2,8 @@
 pid=$(pgrep -f HuaZhi)
 echo $pid
 kill 2 $pid
-sleep 1s
+
+sleep 5
 
 pid1=$(pgrep -f DGPServer)
 echo $pid1
