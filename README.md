@@ -59,7 +59,7 @@ mkdir -p /data/log /data/mysql /data/data
 # WEB_USER 为 supervisor web 管理页面用户名
 # WEB_PASS 为 supervisor web 管理页面密码（可以访问 PUBLIC_IP:2000 来访问进程管理页面）
 # --shm-size=8g【不可删除】，docker默认为64M较小，需要增加才能保证运行
-# 注意，最后的 1995chen/dnf:centos5-2.1.5 部分中的 centos5，你在上一步拉取得哪个版本，则应替换为哪个版本
+# 注意，最后的 1995chen/dnf:centos5-2.1.5 部分中的 centos5，你在上一步(环境配置)拉取得哪个版本，则应替换为哪个版本
 # tailscale需要额外映射设备: --device /dev/net/tun:/dev/net/tun
 docker run -d -e PUBLIC_IP=x.x.x.x -e WEB_USER=root -e WEB_PASS=123456 -e DNF_DB_ROOT_PASSWORD=88888888 -e GM_ACCOUNT=gmuser -e GM_PASSWORD=gmpass -v /data/log:/home/neople/game/log -v /data/mysql:/var/lib/mysql -v /data/data:/data -p 2000:180 -p 3000:3306/tcp -p 7600:7600/tcp -p 881:881/tcp -p 7001:7001/tcp -p 7001:7001/udp -p 30011:30011/tcp -p 31011:31011/udp -p 30052:30052/tcp -p 31052:31052/udp -p 7300:7300/tcp -p 7300:7300/udp -p 2311-2313:2311-2313/udp --cap-add=NET_ADMIN --hostname=dnf --cpus=1 --memory=1g --memory-swap=-1 --shm-size=8g --name=dnf 1995chen/dnf:centos5-2.1.9.fix1
 ```
@@ -67,48 +67,55 @@ docker run -d -e PUBLIC_IP=x.x.x.x -e WEB_USER=root -e WEB_PASS=123456 -e DNF_DB
 ## 如何确认已经成功启动
 
 1.查看日志 log  
-├── siroco11  
-│ ├── Log20211203-09.history  
-│ ├── Log20211203.cri  
-│ ├── Log20211203.debug  
-│ ├── Log20211203.error  
-│ ├── Log20211203.init  
-│ ├── Log20211203.log  
-│ ├── Log20211203.money  
-│ └── Log20211203.snap  
-└── siroco52  
-├── Log20211203-09.history  
-├── Log20211203.cri  
-├── Log20211203.debug  
-├── Log20211203.error  
-├── Log20211203.init  
-├── Log20211203.log  
-├── Log20211203.money  
-└── Log20211203.snap  
-查看Logxxxxxxxx.init文件(其中xxxxxxxx为`当天时间`,需要按实际情况替换),四国的初始化日志都在这里  
+- 进入上一步创建的`/data/log`目录
+    ~~~shell
+    ├── siroco11  
+    │ ├── Log20211203-09.history  
+    │ ├── Log20211203.cri  
+    │ ├── Log20211203.debug  
+    │ ├── Log20211203.error  
+    │ ├── Log20211203.init  
+    │ ├── Log20211203.log  
+    │ ├── Log20211203.money  
+    │ └── Log20211203.snap  
+    └── siroco52  
+      ├── Log20211203-09.history  
+      ├── Log20211203.cri  
+      ├── Log20211203.debug  
+      ├── Log20211203.error  
+      ├── Log20211203.init  
+      ├── Log20211203.log  
+      ├── Log20211203.money  
+      └── Log20211203.snap  
+    ~~~
+- 查看Logxxxxxxxx.init文件(其中xxxxxxxx为`当天时间`,需要按实际情况替换),四国的初始化日志(即下述`GeoIP Allow Country Code`日志)都在这里  
 成功出现四国后,日志文件大概如下,四国初始化时间大概1分钟左右,请耐心等待  
-[root@centos-02 siroco11]# tail -f Log$(date +%Y%m%d).init  
-[09:40:23]    - RestrictBegin : 1  
-[09:40:23]    - DropRate : 0  
-[09:40:23]    Security Restrict End  
-[09:40:23] GeoIP Allow Country Code : CN  
-[09:40:23] GeoIP Allow Country Code : HK  
-[09:40:23] GeoIP Allow Country Code : KR  
-[09:40:23] GeoIP Allow Country Code : MO  
-[09:40:23] GeoIP Allow Country Code : TW(CN)  
-[09:40:32] [!] Connect To Guild Server ...  
-[09:40:32] [!] Connect To Monitor Server ...  
+    ~~~shell
+    [root@centos-02 siroco11] tail -f Log$(date +%Y%m%d).init  
+    [09:40:23]    - RestrictBegin : 1  
+    [09:40:23]    - DropRate : 0  
+    [09:40:23]    Security Restrict End  
+    [09:40:23] GeoIP Allow Country Code : CN  
+    [09:40:23] GeoIP Allow Country Code : HK  
+    [09:40:23] GeoIP Allow Country Code : KR  
+    [09:40:23] GeoIP Allow Country Code : MO  
+    [09:40:23] GeoIP Allow Country Code : TW(CN)  
+    [09:40:32] [!] Connect To Guild Server ...  
+    [09:40:32] [!] Connect To Monitor Server ...  
+    ~~~
 
 2.查看进程  
-在确保日志都正常的情况下,需要查看进程进一步确定程序正常启动  
-[root@centos-02 siroco11]# ps -ef |grep df_game  
-root 16500 16039 9 20:39 ? 00:01:20 ./df_game_r siroco11 start  
-root 16502 16039 9 20:39 ? 00:01:22 ./df_game_r siroco52 start  
-root 22514 13398 0 20:53 pts/0 00:00:00 grep --color=auto df_game  
-如上结果df_game_r进程是存在的,代表成功.如果不成功可以重启服务  
+- 在确保日志都正常的情况下,需要查看进程进一步确定程序正常启动  
+    ~~~shell
+    [root@centos-02 siroco11] ps -ef |grep df_game  
+    root 16500 16039 9 20:39 ? 00:01:20 ./df_game_r siroco11 start  
+    root 16502 16039 9 20:39 ? 00:01:22 ./df_game_r siroco52 start  
+    root 22514 13398 0 20:53 pts/0 00:00:00 grep --color=auto df_game 
+    ~~~ 
+    如上结果df_game_r进程是存在的,代表成功.如果不成功可以重启服务  
 
 3.查看进程管理页面
-可以通过访问http://PUBLIC_IP:2000端口来访问进程管理页面,可以在
+- 可以通过访问http://PUBLIC_IP:2000端口来访问进程管理页面,可以在
 页面上点击dnf:game_siroco11或dnf:game_siroco52进程的Tail -f来查看日志。
 
 ## 默认的网关信息
@@ -131,7 +138,7 @@ GM密码: gmpass
 docker restart dnf
 ```
 
-或在进程管理页面(http://PUBLIC_IP:2000页面手动重启相关进程)。
+或在进程管理页面(http://PUBLIC_IP:2000 页面手动重启相关进程)。
 
 ## 常见问题
 
@@ -202,6 +209,10 @@ docker restart dnf
 * A: 外网访问数据库端口默认为3000端口，不是3306
 * A: game用户默认无法外网访问，请使用root账号和root密码连接数据库
 
+15.服务器一直卡在`Init DataManager`日志循环
+* A: 内存或者swap不足，可以将swap设置为10g或更大(对应docker run参数`--shm-size=10g`同时调整)
+* A: swap占用为0，通过free -m查看swap使用率，通过sysctl -p查看设置是否正确，设置正确依旧swap占用为0，需要重启服务器。参考 [这里](./doc/PrepareLinux.md#%E9%85%8D%E7%BD%AE%E4%BA%A4%E6%8D%A2%E7%A9%BA%E9%97%B4%E8%8B%A5%E5%86%85%E5%AD%98%E4%B8%8D%E8%B6%B3-8gb) 进行设置
+
 ## 高级部署
 
 [点击查看更多部署方式](doc/OtherDeploy.md)
@@ -224,48 +235,36 @@ docker restart dnf
 
 ### 客户端初始化
 #### 1: 解压上述文件
-```
-下载并解压上述链接中的 客户端 统一网关 Dof7补丁 三个压缩包进行解压
-```
+- 下载并解压上述链接中的 客户端 统一网关 Dof7补丁 三个压缩包进行解压
 
 #### 2: Dof7补丁安装
-```
-打开`DO补丁大合集V7.6` 该文件夹中的DNF.toml文件，修改服务器地址为部署服务端时候填写 PUBLIC_IP 的值，并保存文件。
-将该文件夹中的三个文件(DNF.toml, DNF.exe, 使用说明（必看）.txt) 复制到游戏客户端根目录中(即客户端压缩包中解压出来的游戏根目录，地下城与勇士文件夹下)
-```
+- 打开`DO补丁大合集V7.6` 该文件夹中的`DNF.toml`文件，修改服务器地址为部署服务端时候填写`PUBLIC_IP`的值，并保存文件。
+- 将该文件夹中的三个文件(`DNF.toml`, `DNF.exe`, `使用说明（必看）.txt`) 复制到游戏客户端根目录中(即客户端压缩包中解压出来的游戏根目录，地下城与勇士文件夹下)
 
 #### 3: 设置统一网关
-```
-打开统一网关压缩包解压后的文件夹中的`统一网关在线管理工具v6.4.exe`
-点击`网关设置`栏 其中，
-    网关地址 为部署服务端时候填写 PUBLIC_IP 的值
-    网关端口 881 （设置到此处后点击连接，用于验证是否能正常连接上网关）
-    登陆账号 gmuser
-    登陆密码 gmpass
-    通信密钥 763WXRBW3PFTC3IXPFWH
-    登录器端口  7600
-    
-如上设置完成后，点击最下方 参数设置内容立刻生效 按钮
-
-如上设置完成后，点击`登陆器设置`页面
-    服务器名称 可以随意填写
-    登陆器版本 20180307
-    
-    线路名称 可以随意填写
-    游戏地址 为部署服务端时候填写 PUBLIC_IP 的值
-    登陆器端口 7600
-    网关地址 为部署服务端时候填写 PUBLIC_IP 的值
-设置完成后一定要点击 `增加` 按钮
-
-    通信密钥 763WXRBW3PFTC3IXPFWH
-最后点击 `生成登陆器` 按钮（可能会有卡顿，请耐心等待）
-```
+- 打开统一网关压缩包解压后的文件夹中的`统一网关在线管理工具v6.4.exe`
+- 点击上方`网关设置`标签页，其中：
+    - **网关地址** 为部署服务端时候填写 PUBLIC_IP 的值
+    - **网关端口** 881 （设置到此处后点击连接，用于验证是否能正常连接上网关）
+    - **登陆账号** gmuser
+    - **登陆密码** gmpass
+    - **通信密钥** 763WXRBW3PFTC3IXPFWH
+    - **登录器端口**  7600
+- 如上设置完成后，点击最下方 `参数设置内容立刻生效` 按钮
+- 如上设置完成后，点击上方 `登陆器设置` 页面
+    - **服务器名称** 可以随意填写
+    - **登陆器版本** 20180307
+    - **线路名称** 可以随意填写
+    - **游戏地址** 为部署服务端时候填写 PUBLIC_IP 的值
+    - **登陆器端口** 7600
+    - **网关地址** 为部署服务端时候填写 PUBLIC_IP 的值 设置完成后一定要点击 `增加` 按钮
+    - **通信密钥** 763WXRBW3PFTC3IXPFWH
+- 最后点击 `生成登陆器` 按钮（可能会有卡顿，请耐心等待）
 
 #### 4: 最后
-```
-将第三步生产的登陆器，复制到游戏根目录中打开即可进入游戏，登陆游戏记得先去创建账号
-注意： 如上客户端初始化步骤中的参数为docker部署服务端时填写的默认参数，如有变动，请按照实际数据填写
-```
+- 将第三步生产的登陆器以及`Config.ini`文件，复制到游戏根目录中打开即可进入游戏，登陆游戏记得先去创建账号
+- 注意：如上客户端初始化步骤中的参数为docker部署服务端时填写的默认参数，如有变动，请按照实际数据填写
+
 
 ## 沟通交流
 
@@ -306,3 +305,4 @@ XanderYe站库分离镜像：[XanderYe/dnf](https://github.com/XanderYe/dnf)
 在未来的道路上，我将继续努力改进和完善这个项目，以回报您的支持与信任。希望我们能够继续保持联系，共同见证这个项目的成长与发展。
 
 再次感谢您的支持与帮助！
+
