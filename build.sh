@@ -1,4 +1,5 @@
-# 构建基础镜像
-docker build -f $(pwd)/build/DnfBase -t 1995chen/centos:6.9 $(pwd)
-# 构建DNF服务
-docker build -f $(pwd)/build/Dockerfile -t 1995chen/dnf:latest $(pwd)
+# # 构建基础镜像
+# docker build -f $(pwd)/build/DnfBase -t 1995chen/centos:6.9 $(pwd)
+# # 构建DNF服务
+# docker build -f $(pwd)/build/Dockerfile -t 1995chen/dnf:latest $(pwd)
+docker build -f $(pwd)/build/Centos7-DNF/Dockerfile -t dhso/dnf:7.9.2009 $(pwd)

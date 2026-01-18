@@ -1,0 +1,1 @@
+tar -zcvf hz-gate.tar.gz hz-gate
