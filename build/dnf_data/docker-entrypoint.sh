@@ -24,10 +24,6 @@ export MYSQL_PORT=$(echo $MYSQL_PORT | sed "s/[\'\"]//g")
 export MYSQL_GAME_ALLOW_IP=$(echo $MYSQL_GAME_ALLOW_IP | sed "s/[\'\"]//g")
 export AUTO_PUBLIC_IP=$(echo $AUTO_PUBLIC_IP | sed "s/[\'\"]//g")
 export PUBLIC_IP=$(echo $PUBLIC_IP | sed "s/[\'\"]//g")
-export GM_ACCOUNT=$(echo $GM_ACCOUNT | sed "s/[\'\"]//g")
-export GM_PASSWORD=$(echo $GM_PASSWORD | sed "s/[\'\"]//g")
-export GM_CONNECT_KEY=$(echo $GM_CONNECT_KEY | sed "s/[\'\"]//g")
-export GM_LANDER_VERSION=$(echo $GM_LANDER_VERSION | sed "s/[\'\"]//g")
 export DNF_DB_ROOT_PASSWORD=$(echo $DNF_DB_ROOT_PASSWORD | sed "s/[\'\"]//g")
 export DNF_DB_GAME_PASSWORD=$(echo $DNF_DB_GAME_PASSWORD | sed "s/[\'\"]//g")
 export WEB_USER=$(echo $WEB_USER | sed "s/[\'\"]//g")
@@ -52,6 +48,10 @@ fi
 if [ -z "$SERVER_GROUP_DB" ]; then
   export SERVER_GROUP_DB=$SERVER_GROUP_NAME
 fi
+
+# 修复World-writable config 提示
+chmod 644 /etc/my.cnf
+
 # 定义主数据库局部变量
 CUR_MAIN_DB_HOST=$MAIN_MYSQL_HOST
 CUR_MAIN_DB_PORT=$MAIN_MYSQL_PORT
@@ -59,7 +59,7 @@ CUR_MAIN_DB_ROOT_PASSWORD=$MAIN_MYSQL_ROOT_PASSWORD
 CUR_MAIN_DB_GAME_ALLOW_IP=$MAIN_MYSQL_GAME_ALLOW_IP
 
 # 本地数据库地址配置
-if [ -z "$MAIN_MYSQL_HOST" ] && [ -z "$MAIN_MYSQL_PORT" ] && [ -z "$MYSQL_HOST" ] && [ -z "$MYSQL_PORT" ];then
+if [ -z "$MAIN_MYSQL_HOST" ] && [ -z "$MAIN_MYSQL_PORT" ];then
   CUR_MAIN_DB_HOST=127.0.0.1
   CUR_MAIN_DB_PORT=4000
   CUR_MAIN_DB_ROOT_PASSWORD=$DNF_DB_ROOT_PASSWORD
@@ -80,7 +80,7 @@ CUR_SG_DB_ROOT_PASSWORD=$DNF_DB_ROOT_PASSWORD
 CUR_SG_DB_GAME_ALLOW_IP=$MYSQL_GAME_ALLOW_IP
 
 # 本地数据库地址配置
-if [ -z "$MAIN_MYSQL_HOST" ] && [ -z "$MAIN_MYSQL_PORT" ] && [ -z "$MYSQL_HOST" ] && [ -z "$MYSQL_PORT" ];then
+if [ -z "$MYSQL_HOST" ] && [ -z "$MYSQL_PORT" ];then
   CUR_SG_DB_HOST=127.0.0.1
   CUR_SG_DB_PORT=4000
   CUR_SG_DB_GAME_ALLOW_IP=127.0.0.1
@@ -196,13 +196,13 @@ chmod 777 /root/*
 # 拷贝证书key
 cp /data/privatekey.pem /root/
 # 构建配置文件软链[不能使用硬链接, 硬链接不可跨设备]
-ln -s /data/Config.ini /root/Config.ini
+# ln -s /data/Config.ini /root/Config.ini
 # 替换Config.ini中的GM用户名、密码、连接KEY、登录器版本[这里操作的对象是一个软链接不需要指定-type]
-sed -i "s/GAME_PASSWORD/$DNF_DB_GAME_PASSWORD/g" `find /data -name "*.ini"`
-sed -i "s/GM_ACCOUNT/$GM_ACCOUNT/g" `find /data -name "*.ini"`
-sed -i "s/GM_PASSWORD/$GM_PASSWORD/g" `find /data -name "*.ini"`
-sed -i "s/GM_CONNECT_KEY/$GM_CONNECT_KEY/g" `find /data -name "*.ini"`
-sed -i "s/GM_LANDER_VERSION/$GM_LANDER_VERSION/g" `find /data -name "*.ini"`
+# sed -i "s/GAME_PASSWORD/$DNF_DB_GAME_PASSWORD/g" `find /data -name "*.ini"`
+# sed -i "s/GM_ACCOUNT/$GM_ACCOUNT/g" `find /data -name "*.ini"`
+# sed -i "s/GM_PASSWORD/$GM_PASSWORD/g" `find /data -name "*.ini"`
+# sed -i "s/GM_CONNECT_KEY/$GM_CONNECT_KEY/g" `find /data -name "*.ini"`
+# sed -i "s/GM_LANDER_VERSION/$GM_LANDER_VERSION/g" `find /data -name "*.ini"`
 # 重设supervisor web网页密码
 sed -i "s/^username=.*/username=$WEB_USER/" /etc/supervisord.conf
 sed -i "s/^password=.*/password=$WEB_PASS/" /etc/supervisord.conf
