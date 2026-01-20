@@ -46,7 +46,7 @@ frida.load("DP2 load success!", on_frida_call)
 
 local function mainDpLoad(_user)
     game.fac.user(_user):SendNotiPacketMessage(
-        decode_unicode('\\u795e\\u8ff9\\u0020\\u003a\\u0020\\u6b64\\u7248\\u672c\\u514d\\u8d39\\u53d1\\u5e03\\u4e8e\\u4e92\\u8054\\u7f51\\uff0c\\u0020\\u4ec5\\u4f9b\\u5b66\\u4e60\\u548c\\u7814\\u7a76\\u4f7f\\u7528\\uff0c\\u0020\\u4efb\\u4f55\\u76c8\\u5229\\u884c\\u4e3a\\u6240\\u5e26\\u6765\\u7684\\u6cd5\\u5f8b\\u8d23\\u4efb\\u7531\\u76f4\\u63a5\\u53d7\\u76ca\\u4eba\\u627f\\u62c5\\u0021'),
+        "欢迎进入阿拉德养老服，QQ群:651237465。",
          14)
 end
 dpx.hook(game.HookType.Reach_GameWord, mainDpLoad)
