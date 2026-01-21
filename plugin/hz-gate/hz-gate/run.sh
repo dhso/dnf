@@ -24,5 +24,5 @@ echo "Start hz gate"
 pushd ${ROOT_PATH}
 # 使用 LD_LIBRARY_PATH 让 hz-gate 程序使用自己的库
 export LD_LIBRARY_PATH="${HZ_LIB64_PATH}:${LD_LIBRARY_PATH}"
-./start-hz-gate.sh
+./start-gate.sh
 popd
