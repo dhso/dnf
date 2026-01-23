@@ -10,8 +10,13 @@ echo "Current path ${CURR_PATH}"
 HZ_LIB64_PATH="/opt/hz-gate/lib64"
 ROOT_PATH="/root"
 LIB64_TAR_PATH="${CURR_PATH}/lib64"
-ROOT_TAR_PATH="${CURR_PATH}/root"
+ROOT_TAR_PATH="${CURR_PATH}${ROOT_PATH}"
 
+echo "Stopping existing processes..."
+pkill -f DGPServer || true
+pkill -f HuaZhi || true
+pkill -f Restart || true
+sleep 2
 
 # Install
 echo "Install hz gate"
@@ -24,5 +29,6 @@ echo "Start hz gate"
 pushd ${ROOT_PATH}
 # 使用 LD_LIBRARY_PATH 让 hz-gate 程序使用自己的库
 export LD_LIBRARY_PATH="${HZ_LIB64_PATH}:${LD_LIBRARY_PATH}"
-./start-gate.sh
+chmod +x ./Restart ./DGPServer ./HuaZhi
+./Restart
 popd

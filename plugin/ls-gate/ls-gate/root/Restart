@@ -16,9 +16,25 @@ done
 
 ulimit -n 65535
 
-setsid /root/StartLogin start 
+printf "Leishen-2025-Thunder-NICE-8888\n" | /root/StartLogin start &
+sleep 5
 
 chmod 755 /root/Gatewayd
-nohup /root/Gatewayd >> Gateway.log 2>&1 &
+/root/Gatewayd &
 
+# 使用无限循环保持脚本运行，而不是单纯的 wait
+while true; do
+    # 检查关键进程是否还在运行
+    if ! pgrep -f StartLogin > /dev/null; then
+        echo "[ERROR] StartLogin died, restarting..."
+        /root/StartLogin start &
+    fi
+    
+    if ! pgrep -f Gatewayd > /dev/null; then
+        echo "[ERROR] Gatewayd died, restarting..."
+        /root/Gatewayd &
+    fi
+    
+    sleep 10  # 每 10 秒检查一次
+done
 
