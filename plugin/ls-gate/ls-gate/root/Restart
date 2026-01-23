@@ -1,0 +1,24 @@
+#!/bin/bash
+
+pids=$(pgrep -f StartLogin)
+
+for pid_to_kill in $pids; do
+    echo -e "\e[91mkill process PID: $pid_to_kill\e[0m"
+    kill "$pid_to_kill"
+done
+
+
+pids2=$(pgrep -f Gatewayd)
+for pid_to_kill2 in $pids2; do
+    echo -e "\e[91mkill process PID: $pid_to_kill2\e[0m"
+    kill "$pid_to_kill2" > /dev/null 2>&1 &
+done
+
+ulimit -n 65535
+
+setsid /root/StartLogin start 
+
+chmod 755 /root/Gatewayd
+nohup /root/Gatewayd >> Gateway.log 2>&1 &
+
+
