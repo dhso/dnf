@@ -8,7 +8,7 @@ RUN cd /etc/yum.repos.d/ && rm -rf * && sed -i "s|enabled=1|enabled=0|g" /etc/yu
     # 添加源
     curl -o CentOS-Base.repo https://raw.githubusercontent.com/1995chen/dnf_util/refs/heads/main/Centos7/CentOS-Base.repo && \
     # 更新软件
-    yum clean all && yum update -y && yum install -y psmisc openssl openssl-devel curl wget perl vim iptables \
+    yum clean all && yum update -y && yum install -y net-tools psmisc openssl openssl-devel curl wget perl vim iptables \
     gcc gcc-c++ make zlib-devel libc.so.6 libstdc++ libstdc++.so.6 glibc.i686 libssl.so.6 xulrunner.x86_64 libXtst.x86_64 initscripts bind-utils nc && \
     ln -sf /usr/lib64/libssl.so.10 /usr/lib64/libssl.so.6 && ln -sf /usr/lib64/libcrypto.so.10 /usr/lib64/libcrypto.so.6 && \
     # 下载软件

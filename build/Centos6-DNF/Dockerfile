@@ -9,7 +9,7 @@ RUN cd /etc/yum.repos.d/ && rm -rf * && sed -i "s|enabled=1|enabled=0|g" /etc/yu
     curl -o CentOS-Base.repo https://raw.githubusercontent.com/1995chen/dnf_util/refs/heads/main/Centos6/CentOS-Base.repo && \
     # 更新软件
     yum clean all && yum update -y && \
-    yum install -y openssl openssl-devel curl wget perl vim gcc gcc-c++ make zlib-devel libc.so.6 libstdc++ libstdc++.so.6 \
+    yum install -y net-tools openssl openssl-devel curl wget perl vim gcc gcc-c++ make zlib-devel libc.so.6 libstdc++ libstdc++.so.6 \
     glibc.i686 libssl.so.6 xulrunner.x86_64 libXtst.x86_64 initscripts iptables nc && \
     ln -sf /usr/lib64/libssl.so.10 /usr/lib64/libssl.so.6 && ln -sf /usr/lib64/libcrypto.so.10 /usr/lib64/libcrypto.so.6 && \
     # 下载软件
